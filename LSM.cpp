@@ -1,5 +1,6 @@
 #include "LSM.h"
 #include "compaction.h"
+#include <string.h>
 
 void Level_clear(Level &level){
     for(uint32_t i=0; i<level.size(); i++){
@@ -40,7 +41,7 @@ void LSM::print(){
 }
 
 void LSM::traffic_print(){
-    fprintf(stderr, "WAF,%lf,RAF,%lf,%lf\n", (double)t_monitor.total_insert_IO/t_monitor.insert_op, (double)t_monitor.total_read_IO/t_monitor.read_op, (double)t_monitor.error_read_IO/t_monitor.read_op);
+    fprintf(stderr, "WAF,%lf,RAF,%lf,%lf,%lf\n", (double)t_monitor.total_insert_IO/t_monitor.insert_op, (double)t_monitor.total_read_IO/t_monitor.read_op, (double)t_monitor.error_read_IO/t_monitor.read_op, (double)t_monitor.cache_read_IO/t_monitor.read_op);
 }
 
 void LSM::monitor_clear(){
@@ -48,7 +49,7 @@ void LSM::monitor_clear(){
 }
 
 void LSM::traffic_monitor_clear(){
-    t_monitor={0,0,0,0,0};
+    memset(&t_monitor, 0, sizeof(Traffic));
 }
 
 void LSM::insert(uint32_t lba){
@@ -70,6 +71,12 @@ void LSM::insert(uint32_t lba){
         flush_run->insert(*iter);
     }
     flush_run->insert_finish();
+    if(param.cache_on){
+        uint64_t member_num;
+        uint32_t entry_size=flush_run->get_memory(member_num);
+        cache->put(flush_run->now_run_idx, entry_size);
+    }
+
     monitoring(0, flush_run);
     table.clear();
 
@@ -84,6 +91,13 @@ void LSM::insert(uint32_t lba){
         Level& temp=level_list[i];
         if(temp.size()==param.size_factor){
             Run *new_run=compaction(temp, param.bf_on, param.indexing_on, map, param.total_LBA_number);
+
+            if(param.cache_on){
+                uint64_t member_num;
+                uint32_t entry_size=new_run->get_memory(member_num);
+                cache->put(new_run->now_run_idx, entry_size);
+            }
+
             t_monitor.total_insert_IO+=new_run->data.size();
             Level_clear(temp);
             temp.clear();
@@ -128,6 +142,16 @@ void LSM::query(uint32_t lba){
             }
             else if(r_temp->check(lba)==Run::QUERY_RETURN::RUN_NO_DATA){
                 continue;
+            }
+
+            if(param.cache_on){
+                if(cache->get(r_temp->now_run_idx)==-1){
+                    t_monitor.total_read_IO++;
+                    t_monitor.cache_read_IO++;
+                    uint64_t member;
+                    uint32_t entry_size=r_temp->get_memory(member);
+                    cache->put(r_temp->now_run_idx, entry_size);
+                }
             }
 
             uint32_t loop=0;

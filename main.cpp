@@ -15,8 +15,11 @@
 
 int main(int argc, char *argv[]){
     //LSM init
-    LSM_param param(false, true, 10, LBA_RANGE, 5, true);
-    LSM lsmtree(param, WRITE_BUFFER);
+    LSM_param param(false, true, 10, LBA_RANGE, 5, true, false);
+
+    uint64_t cache_size=LBA_RANGE*4;
+    cache_size=cache_size*30/100;
+    LSM lsmtree(param, WRITE_BUFFER, cache_size);
 
     std::string file_name(argv[1]);
     std::ifstream file_stream(file_name);
