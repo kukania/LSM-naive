@@ -1,0 +1,19 @@
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-1.res >log-real_zoltp.f-1.res 2> ./results/mem-real_zoltp.f-1.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-2.res >log-real_zoltp.f-2.res 2> ./results/mem-real_zoltp.f-2.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-3.res >log-real_zoltp.f-3.res 2> ./results/mem-real_zoltp.f-3.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-4.res >log-real_zoltp.f-4.res 2> ./results/mem-real_zoltp.f-4.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-5.res >log-real_zoltp.f-5.res 2> ./results/mem-real_zoltp.f-5.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zoltp.f-6.res >log-real_zoltp.f-6.res 2> ./results/mem-real_zoltp.f-6.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-1.res >log-real_zvarmail.f-1.res 2> ./results/mem-real_zvarmail.f-1.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-2.res >log-real_zvarmail.f-2.res 2> ./results/mem-real_zvarmail.f-2.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-3.res >log-real_zvarmail.f-3.res 2> ./results/mem-real_zvarmail.f-3.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-4.res >log-real_zvarmail.f-4.res 2> ./results/mem-real_zvarmail.f-4.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-5.res >log-real_zvarmail.f-5.res 2> ./results/mem-real_zvarmail.f-5.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zvarmail.f-6.res >log-real_zvarmail.f-6.res 2> ./results/mem-real_zvarmail.f-6.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-1.res >log-real_zwebproxy.f-1.res 2> ./results/mem-real_zwebproxy.f-1.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-2.res >log-real_zwebproxy.f-2.res 2> ./results/mem-real_zwebproxy.f-2.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-3.res >log-real_zwebproxy.f-3.res 2> ./results/mem-real_zwebproxy.f-3.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-4.res >log-real_zwebproxy.f-4.res 2> ./results/mem-real_zwebproxy.f-4.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-5.res >log-real_zwebproxy.f-5.res 2> ./results/mem-real_zwebproxy.f-5.res
+./naive_lsm /home/kukania/SOSP23/fragmentation/parsed/parsed-real_zwebproxy.f-6.res >log-real_zwebproxy.f-6.res 2> ./results/mem-real_zwebproxy.f-6.res
+
