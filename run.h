@@ -37,6 +37,7 @@ private:
 
 public:
     Mapping *indexing;
+    SIDX *sidx;
     enum QUERY_RETURN {
         RUN_NO_DATA, RUN_FOUND_DATA
     };
@@ -54,16 +55,24 @@ public:
         }
 
         if(indexing_on){
+            indexing=new PLR();
+            /*
             if((double)max_size/max_lba_range > 0.1){
                 indexing=new PLR();
             }
             else{
                 indexing=new FP();
-            }
+            }*/
         }
         else{
             indexing=NULL;
         }
+
+        #ifdef SFTL
+            sidx=new SIDX();
+        #else
+            sidx=NULL;
+        #endif
 
         now_run_idx=run_idx++;
     }
@@ -89,12 +98,20 @@ public:
             indexing->insert(lba, data.size());
         }
 
+        if(sidx){
+            sidx->insert(lba, data.size());
+        }
+
         data.push_back(lba);
     }
 
     void insert_finish(){
         if(indexing){
             indexing->make_done();
+        }
+
+        if(sidx){
+            sidx->make_done();
         }
     }
 

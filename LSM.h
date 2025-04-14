@@ -27,6 +27,11 @@ struct PLR_memory{
     uint64_t num;
 };
 
+struct SIDX_memory{
+    uint64_t sum;
+    uint64_t num;
+};
+
 struct Traffic{
     uint64_t read_op;
     uint64_t total_read_IO;
@@ -43,6 +48,7 @@ private:
     std::vector<exact_mapping> map;
     std::vector<Level> level_list;
     std::vector<PLR_memory> monitor;
+    std::vector<SIDX_memory> sidx_monitor;
     std::vector<uint32_t> level_size;
     uint32_t memtable_size;
     Traffic t_monitor;

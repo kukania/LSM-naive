@@ -3,6 +3,8 @@
 #include <vector>
 #include "org_plr.h"
 #include "optimal_PLR.h"
+
+#define SFTL
 struct exact_mapping{
     uint32_t ridx;
     uint32_t iidx;
@@ -11,7 +13,7 @@ struct exact_mapping{
 class Mapping{
 public:
     enum map_type{
-        FP_INDEX, PLR_INDEX
+        FP_INDEX, PLR_INDEX, S_INDEX
     };
     map_type type;
     Mapping(map_type _type): type(_type){
@@ -96,4 +98,20 @@ public:
     uint64_t get_memory(uint32_t lba_size){
         return data_size*40/8;
     }
+};
+
+class SIDX:public Mapping{
+private:
+    std::vector<uint32_t> header_list;
+    std::vector<bool> bitmap;
+    std::vector<uint32_t> data;
+public:
+    SIDX():Mapping(Mapping::map_type::S_INDEX){
+        header_list.clear();
+        bitmap.clear();
+    }
+    void insert(uint32_t lba, uint32_t psa);
+    uint32_t query(uint32_t lba);
+    uint64_t get_memory(uint32_t lba_size);
+    void make_done();
 };

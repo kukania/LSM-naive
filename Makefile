@@ -1,5 +1,5 @@
 all: compaction.cpp LSM.cpp main.cpp org_plr.cpp plr_mapping.cpp run.cpp
-	g++ -std=c++17 -O3 -g -o naive_lsm compaction.cpp LSM.cpp main.cpp org_plr.cpp plr_mapping.cpp assistant//BF/bloomfilter.cpp run.cpp
+	g++ -std=c++17 -O3 -g -o naive_lsm compaction.cpp LSM.cpp main.cpp org_plr.cpp plr_mapping.cpp assistant//BF/bloomfilter.cpp run.cpp SFTL_indexing.cpp
 
 
 plr_test:

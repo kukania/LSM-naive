@@ -12,11 +12,14 @@ void LSM::monitoring(uint32_t level_idx, Run *new_run){
     while(monitor.size() <level_idx+1){
         PLR_memory temp={1024,0,0,0};
         monitor.push_back(temp);
+        SIDX_memory s_temp={0,0};
+        sidx_monitor.push_back(s_temp);
     }
 
     PLR_memory &target=monitor[level_idx];
     uint64_t member;
     uint64_t memory=new_run->get_memory(member);
+
 
     target.num+=member;
     target.sum+=memory;
@@ -29,14 +32,23 @@ void LSM::monitoring(uint32_t level_idx, Run *new_run){
     if(target.max < bits_per_memory){
         target.max=bits_per_memory;
     }
+
+    #ifdef SFTL
+    SIDX_memory &s_target=sidx_monitor[level_idx];
+    s_target.num+=new_run->data.size();
+    s_target.sum+=new_run->sidx->get_memory(32);
+    #endif
 }
 
 void LSM::print(){
     static int cnt=0;
     fprintf(stderr, "%u\n", cnt++);
+    fprintf(stderr, "level, MAX, MIN, AVG, SIDX_AVG\n");
     for(uint32_t i=0; i<monitor.size(); i++){
         PLR_memory &target=monitor[i];
-        fprintf(stderr, "%u %lf %lf %lf\n",i, target.max, target.min, (double)target.sum*8/target.num);
+        fprintf(stderr, "%u %lf %lf %lf ",i, target.max, target.min, (double)target.sum*8/target.num);
+        SIDX_memory &s_target=sidx_monitor[i];
+        fprintf(stderr, "%lf\n", (double)s_target.sum*8/s_target.num);
     }
 }
 
